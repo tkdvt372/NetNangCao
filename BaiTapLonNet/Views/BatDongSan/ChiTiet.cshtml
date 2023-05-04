@@ -1,0 +1,459 @@
+﻿@using Newtonsoft.Json;
+@model BaiTapLonNet.Models.BatDongSan
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+    .card-bds:hover {
+        cursor: pointer;
+        border: 1px solid rgba(60,144,240,0.8);
+    }
+
+    .tongquan-list > li > strong {
+        display: block;
+        float: left;
+        text-transform: uppercase;
+    }
+
+    .tongquan-list > li:nth-child(2n) {
+        background: #fff;
+    }
+
+    .tongquan-list > li {
+        overflow: hidden;
+        padding: 10px;
+        background: #f3f8ff;
+        color: #232323;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .thongtin {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        gap: 10px 10px;
+        grid-auto-flow: row;
+        grid-template-areas:
+            "image image detail detail"
+            "image image detail detail"
+            "image image detail detail"
+            ". .  detail detail"
+            "detail-2 detail-2 detail-2 detail-2"
+            "detail-2 detail-2 detail-2 detail-2"
+            "detail-2 detail-2 detail-2 detail-2";
+    }
+
+    .hinhanh {
+        grid-area: image;
+
+    }
+
+    .tongquan {
+        grid-area: detail;
+    }
+
+    .chitiet {
+        grid-area: detail-2;
+    }
+
+    .card-bds:hover > div > img {
+        transform: scale(1.03);
+    }
+
+    .mySlides {
+        display: none;
+    }
+
+    .min_wrap {
+        width: 1196px;
+        margin: 0 auto;
+    }
+
+    .filter_h {
+        background: #0d509d;
+        color: #fff;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        padding: 10px 15px;
+        overflow: hidden;
+        margin-top: 15px;
+        margin: 0;
+        position:relative;
+    }
+
+    .filter_h ul {
+        float: right;
+    }
+
+    .filter_h ul > li {
+        float: left;
+        padding: 0 10px;
+        position: relative;
+    }
+
+    .filter_h ul > li > a {
+        color: #fff;
+        text-decoration: none;
+        font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"
+    }
+
+    .filter_h ul > li::after {
+        content: "";
+        width: 1px;
+        height: 10px;
+        background: #fff;
+        position: absolute;
+        top: 8px;
+        right: 0;
+    }
+
+    .filter_h ul > li:last-child::after {
+        display: none;
+    }
+
+    .filter_h ul > li:last-child {
+        padding-right: 0;
+    }
+
+    .ul_os_h > li {
+        float: left;
+        width: 30.5%;
+        margin: 0 2% 2% 0;
+        text-align: center;
+        -webkit-transition: all .3s;
+        -moz-transition: all .3s;
+        -o-transition: all .3s;
+        transition: all .3s;
+        -webkit-border-radius: 6px;
+        -moz-border-radius: 6px;
+        border-radius: 6px;
+    }
+
+    ol, ul {
+        list-style: none;
+    }
+</style>
+<h1 style="padding-left:50px;color:#145bad;" class="my-2">BẤT ĐỘNG SẢN</h1>
+<form asp-controller="BatDongSan" asp-action="Search" method="post">
+
+    <div style="display:flex;flex-direction:row;gap:20px;margin:0 50px" class="border-primary">
+
+        <input type="text" name="tukhoa" class="form-control my-3" style="width:30vw;" placeholder="Nhập từ khoá" />
+        <select name="tinh" class="form-select form-select-sm my-3" style="width:30vw;" id="city" aria-label=".form-select-lg example">
+            <option selected>Tỉnh</option>
+        </select>
+
+        <select name="huyen" class="form-select form-select-sm my-3" id="district" style="width:30vw;" aria-label=".form-select-sm example">
+            <option selected>Quận/huyện</option>
+        </select>
+        <select name="xa" class="form-select form-select-sm my-3" id="ward" style="width:30vw;" aria-label=".form-select-sm example">
+            <option selected>Phường/Xã</option>
+        </select>
+    </div>
+    <div style="display:flex;flex-direction:row;gap:20px;margin:0 50px;" class="border-primary">
+        <select name="loai" class="form-select form-select-sm my-3" style="width:31vw;" aria-label=".form-select-sm example">
+            <option selected>Loại</option>
+            <option value="Văn phòng">Văn phòng</option>
+            <option value="Nhà ở">Nhà ở</option>
+        </select>
+        <select name="dientich" class="form-select form-select-sm my-3" style="width:30vw;" aria-label=".form-select-sm example">
+            <option selected>Tất cả diện tích</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+        </select>
+        <select name="gia" class="form-select form-select-sm my-3" style="width:30vw;" aria-label=".form-select-sm example">
+            <option selected>Tất cả giá</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+        </select>
+
+        <input type="submit" class="btn btn-primary my-3" style="width:30vw;" value="Tìm kiếm">
+    </div>
+</form>
+<div class="min_wrap">
+    <div class="filter_h" style="margin: 15px 0;height:44px;">
+        <h2 style="float:left; clear:both;font-size:14px;font-weight:700;position:absolute;top:2px;">Văn phòng cho thuê</h2>
+        <ul>
+            <li>
+                <a href="/BatDongSan?tinh= Thành phố Hà Nội">
+                    Hà Nội
+                </a>
+            </li>
+            <li>
+                <a href="/BatDongSan?tinh= Tỉnh Hưng Yên">
+                    Hưng Yên
+                </a>
+            </li>
+            <li>
+                <a href="/BatDongSan?tinh= Tỉnh Hà Giang">
+                    Hà Giang
+                </a>
+            </li>
+            <li>
+                <a href="/BatDongSan?tinh= Tỉnh Cao Bằng">
+                    Cao Bằng
+                </a>
+            </li>
+            <li>
+                <a href="/BatDongSan?tinh= Tỉnh Bắc Cạn">
+                    Bắc Cạn
+                </a>
+            </li>
+            <li>
+                <a href="/BatDongSan?tinh= Tỉnh Sơn La">
+                    Sơn La
+                </a>
+            </li>
+            <li>
+                <a href="/BatDongSan?tinh= Tỉnh Thái Bình">
+                    Thái Bình
+                </a>
+            </li>
+            <li>
+                <a href="/BatDongSan?tinh= Tỉnh Hoà Bình">
+                    Hoà Bình
+                </a>
+            </li>
+            <li>
+                <a href="/BatDongSan?tinh= Tỉnh Thái Nguyên">
+                    Thái Nguyên
+                </a>
+            </li>
+            <li>
+                <a href="/BatDongSan?tinh= Tỉnh Lạng Sơn">
+                    Lạng Sơn
+                </a>
+            </li>
+            <li>
+                <a href="/BatDongSan?tinh= Tỉnh Hải Dương">
+                    Hải Dương
+                </a>
+            </li>
+            <li>
+                <a href="/BatDongSan?tinh= Tỉnh Phú Thọ">
+                    Phú Thọ
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</div>
+<section class="py-1" style="margin-bottom: 200px;">
+    <div class="container px-4 px-lg-5 mt-5 text-start" style="display:flex;flex-direction:row;gap:20px;">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-3 justify-content-start" style="width: 60vw;">
+            <div class="thongtin" style="width:100%;">
+                <div class="hinhanh position-relative">
+                    @foreach (var item in Model.HinhAnh)
+                    {
+                        <img class="mySlides" src="@item" style="width:100%;height: 400px;">
+                    }
+                    <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+                    <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+                </div>
+                <div class="tongquan">
+                    <h1 style="padding-left:30px;color: #0d509d;font-weight:500;font-size:16px;line-height: 22px;text-transform: uppercase;">
+                        @Model.TenToaNha
+                    </h1>
+                    <hr />
+                    <ul class="tongquan-list" style="list-style: none;">
+                        <li>
+                            <strong>MÃ BDS:</strong>
+                            <span>@Model.MaBatDongSan</span>
+                        </li>
+                        <li>
+                            <strong>Diện tích sàn:</strong>
+                            <span>@Model.DienTichSan m&#178</span>
+                        </li>
+                        <li>
+                            <strong>DT Cho thuê:</strong>
+                            <span>@Model.DienTichChoThue m&#178</span>
+                        </li>
+                        @if (@Model.PhiQuanLy != 0)
+                        {
+                            <li>
+                                <strong>Phí quản lý:</strong>
+                                <span>@Model.PhiQuanLy</span>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <strong>Phí quản lý:</strong>
+                                <span>Tự quản lý</span>
+                            </li>
+                        }
+
+                        @if (@Model.VAT != 0)
+                        {
+                            <li>
+                                <strong>VAT:</strong>
+                                <span>@Model.VAT</span>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <strong>VAT:</strong>
+                                <span>Tự quản lý</span>
+                            </li>
+                        }
+                        @if (@Model.PhiGuiOto != 0)
+                        {
+                            <li>
+                                <strong>Phí gửi ôtô:</strong>
+                                <span>@Model.PhiGuiOto</span>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <strong>Phí gửi ôtô:</strong>
+                                <span>Tự quản lý</span>
+                            </li>
+                        }
+
+                        @if (@Model.PhiGuiXeMay != 0)
+                        {
+                            <li>
+                                <strong>Phí gửi xe máy:</strong>
+                                <span>@Model.PhiGuiXeMay</span>
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                <strong>Phí gửi ôtô:</strong>
+                                <span>Tự quản lý</span>
+                            </li>
+                        }
+                        <li>
+                            <strong style="color:red;">Giá cập nhật:</strong>
+                            <span style="color:red;">@Model.GiaCapNhat.ToString("dd/MM/yyyy")</span>
+                        </li>
+                    </ul>
+                    <p style="width: 92%;margin-left: 35px;color: #fff;text-align: center;font-size: 16px;font-weight: 700;padding: 10px;background: #cb1a23;">@Model.Gia USD</p>
+                    <a href="#" class="btn btn-success" style="width: 92%; margin-left: 35px;">Đăng ký đi xem</a>
+                </div>
+                <div class="chitiet" style="border:1px solid black;"></div>
+            </div>
+        </div>
+        <div>
+
+            <div style="width:20vw;box-shadow:0 0 10px rgba(0,0,0,0.1);" class="list-group">
+                <div style="background-color:#0d509d;color:white;font-weight:700;padding: 8px 10px;
+                    text-transform: uppercase;text-align: center;
+                    white-space: nowrap;border-top-left-radius: 5px;
+                    border-top-right-radius: 5px;font-size:14px;">
+                    Văn phòng cho thuê
+                </div>
+                <div>
+                    <ul style="list-style: none;" class="list-group">
+                        <li class="list-group-item">Tất cả</li>
+                        <li class="list-group-item">Văn phòng cho thuê Hà Nội</li>
+                        <li class="list-group-item">Văn phòng cho thuê Hưng Yên</li>
+                        <li class="list-group-item">Văn phòng cho thuê Điện Biên</li>
+                        <li class="list-group-item">Văn phòng cho thuê Lai Châu</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="width:20vw;box-shadow: 0 0 10px rgba(0,0,0,0.1);margin-top:50px;" class="list-group">
+                <div style="background-color:#0d509d;color:white;font-weight:700;padding: 8px 10px;
+                    text-transform: uppercase;text-align: center;
+                    white-space: nowrap;border-top-left-radius: 5px;
+                    border-top-right-radius: 5px;font-size:14px;">
+                    Xem theo diện tích
+                </div>
+                <div>
+                    <ul style="list-style: none;" class="list-group">
+                        <li class="list-group-item">Tất cả</li>
+                        <li class="list-group-item">Văn phòng cho thuê Hà Nội</li>
+                        <li class="list-group-item">Văn phòng cho thuê Hưng Yên</li>
+                        <li class="list-group-item">Văn phòng cho thuê Điện Biên</li>
+                        <li class="list-group-item">Văn phòng cho thuê Lai Châu</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="width:20vw;box-shadow: 0 0 10px rgba(0,0,0,0.1);margin-top:50px;" class="list-group">
+                <div style="background-color:#0d509d;color:white;font-weight:700;padding: 8px 10px;
+                    text-transform: uppercase;text-align: center;
+                    white-space: nowrap;border-top-left-radius: 5px;
+                    border-top-right-radius: 5px;font-size:14px;">
+                    Xem theo mức giá
+                </div>
+                <div>
+                    <ul style="list-style: none;" class="list-group">
+                        <li class="list-group-item">Tất cả</li>
+                        <li class="list-group-item">Văn phòng cho thuê Hà Nội</li>
+                        <li class="list-group-item">Văn phòng cho thuê Hưng Yên</li>
+                        <li class="list-group-item">Văn phòng cho thuê Điện Biên</li>
+                        <li class="list-group-item">Văn phòng cho thuê Lai Châu</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script>
+    var citis = document.getElementById("city");
+    var districts = document.getElementById("district");
+    var wards = document.getElementById("ward");
+    var Parameter = {
+        url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+        method: "GET",
+        responseType: "application/json",
+    };
+    var promise = axios(Parameter);
+    promise.then(function (result) {
+        console.log(result)
+        renderCity(result.data);
+    });
+
+    function renderCity(data) {
+        for (const x of data) {
+            citis.options[citis.options.length] = new Option(x.Name, x.Name);
+        }
+        citis.onchange = function () {
+            district.length = 1;
+            ward.length = 1;
+            if (this.value != "") {
+                const result = data.filter(n => n.Name === this.value);
+
+                for (const k of result[0].Districts) {
+                    district.options[district.options.length] = new Option(k.Name, k.Name);
+                }
+            }
+        };
+        district.onchange = function () {
+            ward.length = 1;
+            const dataCity = data.filter((n) => n.Name === citis.value);
+            if (this.value != "") {
+                const dataWards = dataCity[0].Districts.filter(n => n.Name === this.value)[0].Wards;
+
+                for (const w of dataWards) {
+                    wards.options[wards.options.length] = new Option(w.Name, w.Name);
+                }
+            }
+        };
+    }
+    var slideIndex = 1;
+    showDivs(slideIndex);
+
+    function plusDivs(n) {
+        showDivs(slideIndex += n);
+    }
+
+    function showDivs(n) {
+        var i;
+        var x = document.getElementsByClassName("mySlides");
+        if (n > x.length) { slideIndex = 1 }
+        if (n < 1) { slideIndex = x.length }
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        x[slideIndex - 1].style.display = "block";
+    }
+</script>
+

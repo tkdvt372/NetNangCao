@@ -1,0 +1,575 @@
+﻿@using Newtonsoft.Json;
+
+<style>
+    .card-img-top:hover {
+        transform: scale(1.03);
+        width: border-radius:10px;
+    }
+
+    .gt-1:hover > img {
+        transform: translateY(-4%);
+    }
+
+    .info_pic:hover > img {
+        transform: translateY(-4%);
+    }
+
+    .min_wrap {
+        width: 1196px;
+        margin: 0 auto;
+    }
+
+    .clearfix {
+        display: block;
+        float: none;
+        clear: both;
+    }
+
+    .ul_os_h > li h3 {
+        font-size: 12px;
+        text-transform: uppercase;
+        height: 35px;
+        color: #000;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        padding-top: 20px;
+    }
+
+    .text_ykkh_top {
+        text-align: justify;
+        min-height: 110px;
+        overflow: hidden;
+        padding-bottom: 20px;
+        color: #333;
+        float: left;
+    }
+
+    .gt-1:-webkit-any {
+        color: -webkit-link;
+        cursor: none;
+        text-decoration: underline;
+    }
+
+    ol, ul {
+        list-style: none;
+    }
+
+    .gt-1 {
+        display: block;
+        padding: 20px 25px 20px 25px;
+        border-radius: 5px;
+    }
+
+    img.lazy {
+        width: 100%;
+        height: 100%;
+    }
+
+    img, embed {
+        vertical-align: middle;
+    }
+
+    .ul_os_h > li img {
+        display: inline-block;
+        background: #f9f9f9;
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        -webkit-box-shadow: 4px 4px 0 rgba(0,0,0,0.1);
+        -moz-box-shadow: 4px 4px 0 rgba(0,0,0,0.1);
+        box-shadow: 4px 4px 0 rgba(0,0,0,0.1);
+        -webkit-transition: all 0.3s ease;
+        -moz-transition: all 0.3s ease;
+        -o-transition: all 0.3s ease;
+        transition: all 0.3s ease;
+    }
+
+    .filter_h {
+        background: #0d509d;
+        color: #fff;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        padding: 10px 15px;
+        overflow: hidden;
+        margin-top: 15px;
+        margin: 0;
+    }
+
+    .ul_os_h > li {
+        float: left;
+        width: 30.5%;
+        margin: 0 2% 2% 0;
+        text-align: center;
+        -webkit-transition: all .3s;
+        -moz-transition: all .3s;
+        -o-transition: all .3s;
+        transition: all .3s;
+        -webkit-border-radius: 6px;
+        -moz-border-radius: 6px;
+        border-radius: 6px;
+    }
+
+    .filter_h ul {
+        float: right;
+    }
+
+        .filter_h ul > li {
+            float: left;
+            padding: 0 10px;
+            position: relative;
+        }
+
+            .filter_h ul > li > a {
+                color: #fff;
+                text-decoration: none;
+            }
+
+            .filter_h ul > li::after {
+                content: "";
+                width: 1px;
+                height: 10px;
+                background: #fff;
+                position: absolute;
+                top: 8px;
+                right: 0;
+            }
+
+            .filter_h ul > li:last-child::after {
+                display: none;
+            }
+
+            .filter_h ul > li:last-child {
+                padding-right: 0;
+            }
+
+    .info_pic img {
+        display: inline-block;
+        background: none !important;
+        width: auto !important;
+        height: auto !important;
+        border-radius: 0px !important;
+        box-shadow: none !important;
+    }
+
+    .t1_cont {
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 18px;
+        line-height: 30px;
+        font-weight: 700;
+        color: #333;
+        background: url(https://vanphongchothue.vn/imgs/line_t1_cont.png) no-repeat bottom center;
+        padding-bottom: 5px;
+        margin-bottom: 30px;
+    }
+
+    .ul_prod > li figure {
+        height: 180px;
+        overflow: hidden;
+        -webkit-border-top-left-radius: 5px;
+        -webkit-border-top-right-radius: 5px;
+        -moz-border-radius-topleft: 5px;
+        -moz-border-radius-topright: 5px;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+
+        .ul_prod > li figure img {
+            display: block;
+            width: 100%;
+            min-height: 180px;
+            height: auto;
+            -webkit-transition: .3s ease;
+            -moz-transition: .3s ease;
+            -ms-transition: .3s ease;
+            -o-transition: .3s ease;
+            transition: .3s ease;
+            -webkit-border-top-left-radius: 5px;
+            -webkit-border-top-right-radius: 5px;
+            -moz-border-radius-topleft: 5px;
+            -moz-border-radius-topright: 5px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+    .img_object_fit {
+        object-fit: cover;
+        -moz-object-fit: cover;
+        -webkit-object-fit: cover;
+        -o-object-fit: cover;
+        -ms-object-fit: cover;
+    }
+
+    .clearfix:after {
+        content: ".";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+    }
+    .color_t {
+        position: absolute;
+        margin: 0 auto;
+        bottom: 0%;
+        width: 100%;
+        text-align: center;
+        font-weight: bold !important;
+        height: 50px !important;
+        line-height: 50px !important;
+        text-transform: uppercase !important;
+        color: #fff !important;
+        background: -webkit-linear-gradient(top,rgba(0,0,0,0) 0%,rgba(0,0,0,0.8) 100%);
+        background: linear-gradient(to bottom,rgba(0,0,0,0) 0%,rgba(0,0,0,0.8) 100%);
+    }
+
+    .place {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 10px 10px;
+        grid-auto-flow: row;
+        grid-template-areas:
+            "place1 place2 place3 place4"
+            "place5 place6 place7 place8";
+    }
+
+    .place1 {
+        grid-area: place1;
+    }
+
+    .place2 {
+        grid-area: place2;
+    }
+
+    .place3 {
+        grid-area: place3;
+    }
+
+    .place4 {
+        grid-area: place4;
+    }
+
+    .place5 {
+        grid-area: place5;
+    }
+
+    .place6 {
+        grid-area: place6;
+    }
+
+    .place7 {
+        grid-area: place7;
+    }
+
+    .place8 {
+        grid-area: place8;
+    }
+
+    .place-item:hover > a > figure > img {
+        transform: scale(1.03);
+    }
+</style>
+<h1 style="padding-left:50px;color:#145bad;" class="my-2">TRANG CHỦ</h1>
+<div style="display:flex;flex-direction:row;gap:20px;margin:0 50px" class="border-primary">
+
+    <input type="text" class="form-control my-3" style="width:30vw;" placeholder="Nhập từ khoá" />
+    <select class="form-select form-select-sm my-3" style="width:30vw;" id="city" aria-label=".form-select-lg example">
+        <option selected>Tỉnh</option>
+    </select>
+
+    <select class="form-select form-select-sm my-3" id="district" style="width:30vw;" aria-label=".form-select-sm example">
+        <option selected>Quận/huyện</option>
+    </select>
+    <select class="form-select form-select-sm my-3" id="ward" style="width:30vw;" aria-label=".form-select-sm example">
+        <option selected>Phường/Xã</option>
+    </select>
+</div>
+<div style="display:flex;flex-direction:row;gap:20px;margin:0 50px;" class="border-primary">
+    <select class="form-select form-select-sm my-3" style="width:31vw;" aria-label=".form-select-sm example">
+        <option selected>Loại</option>
+        <option value="1">Văn phòng</option>
+        <option value="2">Nhà ở</option>
+    </select>
+    <select class="form-select form-select-sm my-3" style="width:30vw;" aria-label=".form-select-sm example">
+        <option selected>Tất cả diện tích</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+    </select>
+    <select class="form-select form-select-sm my-3" style="width:30vw;" aria-label=".form-select-sm example">
+        <option selected>Tất cả giá</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+    </select>
+    <a href="#" class="btn btn-primary my-3" style="width:30vw;">Tìm kiếm</a>
+</div>
+<div class="min_wrap">
+    <div class="filter_h" style="margin: 15px 0;height:44px;">
+        <h2 style="float:left; clear:both;font-size:14px;padding-top: 3px;">Văn phòng cho thuê</h2>
+        <ul>
+            <li>
+                <a href="/BatDongSan?tinh= Thành phố Hà Nội">
+                    Hà Nội
+                </a>
+            </li>
+            <li>
+                <a href="/BatDongSan?tinh= Tỉnh Hưng Yên">
+                    Hưng Yên
+                </a>
+            </li>
+            <li>
+                <a href="/BatDongSan?tinh= Tỉnh Hà Giang">
+                    Hà Giang
+                </a>
+            </li>
+            <li>
+                <a href="/BatDongSan?tinh= Tỉnh Cao Bằng">
+                    Cao Bằng
+                </a>
+            </li>
+            <li>
+                <a href="/BatDongSan?tinh= Tỉnh Bắc Cạn">
+                    Bắc Cạn
+                </a>
+            </li>
+            <li>
+                <a href="/BatDongSan?tinh= Tỉnh Sơn La">
+                    Sơn La
+                </a>
+            </li>
+            <li>
+                <a href="/BatDongSan?tinh= Tỉnh Thái Bình">
+                    Thái Bình
+                </a>
+            </li>
+            <li>
+                <a href="/BatDongSan?tinh= Tỉnh Hoà Bình">
+                    Hoà Bình
+                </a>
+            </li>
+            <li>
+                <a href="/BatDongSan?tinh= Tỉnh Thái Nguyên">
+                    Thái Nguyên
+                </a>
+            </li>
+            <li>
+                <a href="/BatDongSan?tinh= Tỉnh Lạng Sơn">
+                    Lạng Sơn
+                </a>
+            </li>
+            <li>
+                <a href="/BatDongSan?tinh= Tỉnh Hải Dương">
+                    Hải Dương
+                </a>
+            </li>
+            <li>
+                <a href="/BatDongSan?tinh= Tỉnh Phú Thọ">
+                    Phú Thọ
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</div>
+<section class="os_h" style="background: #f9f9f9;width: 1196px;margin-left: 50px;">
+    <div class="min_wrap">
+        <ul class="ul_os_h clearfix">
+            <li>
+                <div class="gt-1">
+                    <img class="lazy b-loaded" alt="" src="https://vanphongchothue.vn/uploads/thuvien/dich-vu-cho-thue-van-phong-jpg-202012201434326mrZIvNEGw.jpg">
+                    <h3>Dịch vụ cho thuê văn phòng</h3>
+                    <div class="text_ykkh_top">
+                        <div class="f-detail clearfix">
+                            Dịch vụ cho thuê văn phòng tại DVT, Cung cấp đầy đủ thông tin tòa nhà văn phòng cho thuê tại, tư vấn miễn phí, báo giá thuê nhanh. Quý khách hàng hãy liên hệ DVT Jsc Hotline 0366974520 để được hỗ trợ và tư vấn và nhận báo giá thuê văn phòng tốt nhất, đồng thời đặt lịch hẹn đi xem văn phòng thực tế tại tòa nhà, hỗ trợ đưa đón khách hàng tận nơi.
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="gt-1">
+                    <img class="lazy b-loaded" alt="" src="https://vanphongchothue.vn/uploads/thuvien/dich-vu-cho-thue-nha-cho-thue-mat-bang-kinh-doanh-jpg-20201220145128maTqrQaWnI.jpg">
+                    <h3>Dịch vụ cho thuê nhà - mặt bằng kinh doanh</h3>
+                    <div class="text_ykkh_top">
+                        <div class="f-detail clearfix">
+                            DVT JSC cung cấp dịch vụ cho thuê nhà, mặt bằng kinh doanh tại các quận trung tâm TP.Hồ Chí Minh. Chúng tôi tư vấn và cung cấp thông tin Miễn Phí, giá thuê trực tiếp từ chủ nhà, nhiều thông tin để lựa chọn, với diện tích, giá thue, hình ảnh thực tế, hãy liên hệ đến chúng tôi để được hỗ trợ. Nhận ký gửi nhà, mặt bằng cho thuê, giao dịch nhanh được giá.
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="gt-1">
+                    <img class="lazy b-loaded" alt="" src="https://vanphongchothue.vn/uploads/thuvien/dinh-gia-bat-dong-san-jpg-20201220150623Gz5Q72jxCh.jpg">
+                    <h3>Dịch vụ định giá bất động sản</h3>
+                    <div class="text_ykkh_top">
+                        <div class="f-detail clearfix">
+                            DVT JSC cung cấp dịch vụ định giá bất động sản tại TP.HCM. Với đội ngũ chuyên viên định giá nhiều năm kinh nghiệm, am hiểu về pháp lý, giá cả thị trường, chúng tôi giúp quý Khách định giá bất động sản chính xác nhất và khách quan nhất. Hiện tại VNREAL cung cấp định giá cho 2 phân khúc bán và cho thuê bất động sản, liên hệ VNREAL để được tư vấn và hỗ trợ tốt nhất.
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul><!-- End .ul_os_h -->
+    </div><!-- End .min_wrap -->
+</section>
+<div class="t1_cont">Tại sao lại chọn chúng tôi</div>
+<section class="os_h" style="background: #f9f9f9;width: 1196px;margin-left: 50px;">
+    <div class="min_wrap">
+        <ul class="ul_os_h clearfix">
+            <li>
+                <div class="gt-1">
+                    <figure class="info_pic">
+                        <img class="lazy b-loaded" alt="" src="https://vanphongchothue.vn/uploads/thuvien/toa-nha-van-phong-cho-thue-png-20201220132456gTcS9MuCK4.png">
+                    </figure>
+                    <h3>Dịch vụ cho thuê văn phòng</h3>
+                    <div class="text_ykkh_top">
+                        <div class="f-detail clearfix">
+                            Dịch vụ cho thuê văn phòng tại DVT, Cung cấp đầy đủ thông tin tòa nhà văn phòng cho thuê tại, tư vấn miễn phí, báo giá thuê nhanh. Quý khách hàng hãy liên hệ DVT Jsc Hotline 0366974520 để được hỗ trợ và tư vấn và nhận báo giá thuê văn phòng tốt nhất, đồng thời đặt lịch hẹn đi xem văn phòng thực tế tại tòa nhà, hỗ trợ đưa đón khách hàng tận nơi.
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="gt-1">
+                    <figure class="info_pic">
+                        <img class="lazy b-loaded" alt="" src="https://vanphongchothue.vn/uploads/thuvien/nhan-vien-cho-thue-van-phong-jpg-20201220132754FVy3hK89Ip.jpg">
+                    </figure>
+                    <h3>Dịch vụ cho thuê nhà - mặt bằng kinh doanh</h3>
+                    <div class="text_ykkh_top">
+                        <div class="f-detail clearfix">
+                            DVT JSC cung cấp dịch vụ cho thuê nhà, mặt bằng kinh doanh tại các quận trung tâm TP.Hồ Chí Minh. Chúng tôi tư vấn và cung cấp thông tin Miễn Phí, giá thuê trực tiếp từ chủ nhà, nhiều thông tin để lựa chọn, với diện tích, giá thue, hình ảnh thực tế, hãy liên hệ đến chúng tôi để được hỗ trợ. Nhận ký gửi nhà, mặt bằng cho thuê, giao dịch nhanh được giá.
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="gt-1">
+                    <figure class="info_pic">
+                        <img class="lazy b-loaded" alt="" src="https://vanphongchothue.vn/uploads/thuvien/vnreal-jsc-hinh-thanh-phat-trien-jpg-20201220135135vhqmLzJRwq.jpg">
+                    </figure>
+                    <h3>Dịch vụ định giá bất động sản</h3>
+                    <div class="text_ykkh_top">
+                        <div class="f-detail clearfix">
+                            DVT JSC cung cấp dịch vụ định giá bất động sản tại TP.HCM. Với đội ngũ chuyên viên định giá nhiều năm kinh nghiệm, am hiểu về pháp lý, giá cả thị trường, chúng tôi giúp quý Khách định giá bất động sản chính xác nhất và khách quan nhất. Hiện tại VNREAL cung cấp định giá cho 2 phân khúc bán và cho thuê bất động sản, liên hệ VNREAL để được tư vấn và hỗ trợ tốt nhất.
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</section>
+<div class="filter_h" style="margin-top: 15px;width: 1196px;margin-left: 50px;">
+    <h2 style="text-transform:uppercase; text-align:center;font-size: 14px;">Tòa nhà văn phòng cho thuê</h2>
+</div>
+<div class="block_h" style="width: 1196px;margin-left: 50px;">
+    <ul class="ul_prod clearfix place" style="margin-top:30px;">
+        <li class="place1 place-item">
+            <a href="https://vanphongchothue.vn/van-phong-cho-thue/quan-1/">
+                <figure style="border-radius:5px !important; position:relative;">
+                    <img class="lazy img_t img_object_fit  b-loaded" alt="" src="https://vanphongchothue.vn/uploads/thuvien/toa-nha-van-phong-quan-1-jpg-20201221105849eMKdwLEKz6.jpg">
+                    <h3 class="color_t" style="font-size: 13px;">Hà Nội <span style="font-size:12px;font-style:italic;">(800)</span></h3>
+                </figure>
+            </a>
+        </li>
+        <li class="place2 place-item">
+            <a href="https://vanphongchothue.vn/van-phong-cho-thue/quan-2/">
+                <figure style="border-radius:5px !important; position:relative;">
+                    <img class="lazy img_t img_object_fit b-loaded" alt="" src="https://vanphongchothue.vn/uploads/thuvien/toa-nha-van-phong-quan-2-jpg-202012211104409sFKI3FE3m.jpg">
+                    <h3 class="color_t" style="font-size: 13px;">Hưng Yên <span style="font-size:12px;font-style:italic;">(99)</span></h3>
+                </figure>
+            </a>
+        </li>
+        <li class="place3 place-item">
+            <a href="https://vanphongchothue.vn/van-phong-cho-thue/quan-3/">
+                <figure style="border-radius:5px !important; position:relative;">
+                    <img class="lazy img_t img_object_fit b-loaded" alt="" src="https://vanphongchothue.vn/uploads/thuvien/toa-nha-van-phong-quan-3-jpg-20201221111851WvRSZWfTrh.jpg">
+                    <h3 class="color_t" style="font-size: 13px;">Phú Thọ<span style="font-size:12px;font-style:italic;">(600)</span></h3>
+                </figure>
+            </a>
+        </li>
+        <li class="place4 place-item">
+            <a href="https://vanphongchothue.vn/van-phong-cho-thue/quan-4/">
+                <figure style="border-radius:5px !important; position:relative;">
+                    <img class="lazy img_t img_object_fit b-loaded" alt="" src="https://vanphongchothue.vn/uploads/thuvien/toa-nha-van-phong-quan-4-jpg-202108140420401HmYywYsT5.jpg">
+                    <h3 class="color_t" style="font-size: 13px;">Thái Bình <span style="font-size:12px;font-style:italic;">(88)</span></h3>
+                </figure>
+            </a>
+        </li>
+        <li class="place5 place-item">
+            <a href="https://vanphongchothue.vn/van-phong-cho-thue/quan-10/">
+                <figure style="border-radius:5px !important; position:relative;">
+                    <img class="lazy img_t img_object_fit b-loaded" alt="" src="https://vanphongchothue.vn/uploads/thuvien/toa-nha-van-phong-quan-10-jpg-20201221112806QH7z3wuxXw.jpg">
+                    <h3 class="color_t" style="font-size: 13px;">Lào Cai<span style="font-size:12px;font-style:italic;">(123)</span></h3>
+                </figure>
+            </a>
+        </li>
+        <li class="place6 place-item">
+            <a href="https://vanphongchothue.vn/van-phong-cho-thue/quan-tan-binh/">
+                <figure style="border-radius:5px !important; position:relative;">
+                    <img class="lazy img_t img_object_fit b-loaded" alt="" src="https://vanphongchothue.vn/uploads/thuvien/toa-nha-van-phong-quan-tan-binh-jpg-20201221113213sFHZmaoasQ.jpg">
+                    <h3 class="color_t" style="font-size: 13px;">Hải Dương<span style="font-size:12px;font-style:italic;">(379)</span></h3>
+                </figure>
+            </a>
+        </li>
+        <li class="place7 place-item">
+            <a href="https://vanphongchothue.vn/van-phong-cho-thue/quan-phu-nhuan/">
+                <figure style="border-radius:5px !important; position:relative;">
+                    <img class="lazy img_t img_object_fit b-loaded" alt="" src="https://vanphongchothue.vn/uploads/thuvien/toa-nha-van-phong-quan-phu-nhuan-jpg-20201221113751S3RoPo9knP.jpg">
+                    <h3 class="color_t" style="font-size: 13px;">Bắc Ninh <span style="font-size:12px;font-style:italic;">(269)</span></h3>
+                </figure>
+            </a>
+        </li>
+        <li class="place8 place-item">
+            <a href="https://vanphongchothue.vn/van-phong-cho-thue/quan-binh-thanh/">
+                <figure style="border-radius:5px !important; position:relative;">
+                    <img class="lazy img_t img_object_fit b-loaded" alt="" src="https://vanphongchothue.vn/uploads/thuvien/toa-nha-van-phong-quan-binh-thanh-jpg-20201221111257xWP1CpSNWm.jpg">
+                    <h3 class="color_t" style="font-size: 13px;">Vĩnh Phúc <span style="font-size:12px;font-style:italic;">(268)</span></h3>
+                </figure>
+            </a>
+        </li>
+    </ul>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script>
+    var citis = document.getElementById("city");
+    var districts = document.getElementById("district");
+    var wards = document.getElementById("ward");
+    var Parameter = {
+        url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
+        method: "GET",
+        responseType: "application/json",
+    };
+    var promise = axios(Parameter);
+    promise.then(function (result) {
+        renderCity(result.data);
+    });
+
+    function renderCity(data) {
+        for (const x of data) {
+            citis.options[citis.options.length] = new Option(x.Name, x.Id);
+        }
+        citis.onchange = function () {
+            district.length = 1;
+            ward.length = 1;
+            if (this.value != "") {
+                const result = data.filter(n => n.Id === this.value);
+
+                for (const k of result[0].Districts) {
+                    district.options[district.options.length] = new Option(k.Name, k.Id);
+                }
+            }
+        };
+        district.onchange = function () {
+            ward.length = 1;
+            const dataCity = data.filter((n) => n.Id === citis.value);
+            if (this.value != "") {
+                const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
+
+                for (const w of dataWards) {
+                    wards.options[wards.options.length] = new Option(w.Name, w.Id);
+                }
+            }
+        };
+    }
+
+</script>

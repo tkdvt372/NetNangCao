@@ -1,0 +1,44 @@
+﻿@model BaiTapLonNet.Models.TaiKhoan
+
+@{
+    ViewData["Title"] = "SuaThongTin";
+}
+
+<h1>SỬA THÔNG TIN HỒ SƠ</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SuaThongTin">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MaTaiKhoan" />
+            <div class="form-group">
+                <label asp-for="HoVaTen" class="control-label">Họ và tên</label>
+                <input asp-for="HoVaTen" class="form-control" />
+                <span asp-validation-for="HoVaTen" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CCCD" class="control-label">Căn cước công dân</label>
+                <input asp-for="CCCD" class="form-control" />
+                <span asp-validation-for="CCCD" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label">Email</label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="MatKhau" />
+            <div class="form-group">
+                <input type="submit" value="Sửa" class="btn btn-primary my-3" />     <a class="btn btn-primary" style="margin-left:300px;" asp-action="HoSo" asp-controller="TaiKhoan">Huỷ</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
