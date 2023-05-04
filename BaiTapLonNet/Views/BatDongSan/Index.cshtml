@@ -2,6 +2,15 @@
 @model List<BaiTapLonNet.Models.BatDongSan>
 
 <style>
+    .right-side > li > a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .right-side > li > a:hover {
+        color: #0d509d;
+        text-decoration: underline;
+    }
     .card-bds:hover {
         cursor: pointer;
         border: 1px solid rgba(60,144,240,0.8);
@@ -306,12 +315,32 @@
                     Văn phòng cho thuê
                 </div>
                 <div>
-                    <ul style="list-style: none;" class="list-group">
-                        <li class="list-group-item">Tất cả</li>
-                        <li class="list-group-item">Văn phòng cho thuê Hà Nội</li>
-                        <li class="list-group-item">Văn phòng cho thuê Hưng Yên</li>
-                        <li class="list-group-item">Văn phòng cho thuê Điện Biên</li>
-                        <li class="list-group-item">Văn phòng cho thuê Lai Châu</li>
+                    <ul style="list-style: none;" class="list-group right-side">
+                        <li class="list-group-item">
+                            <a href="/BatDongSan">
+                                Tất cả
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?tinh=Thành phố Hà Nội">
+                                Văn phòng cho thuê Hà Nội
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?tinh=Tỉnh Hưng Yên">
+                                Văn phòng cho thuê Hưng Yên
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?tinh=Tỉnh Thái Bình">
+                                Văn phòng cho thuê Thái Bình
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?tinh=Tỉnh Bắc Ninh">
+                                Văn phòng cho thuê Bắc Ninh
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -323,12 +352,52 @@
                     Xem theo diện tích
                 </div>
                 <div>
-                    <ul style="list-style: none;" class="list-group">
-                        <li class="list-group-item">Tất cả</li>
-                        <li class="list-group-item">Văn phòng cho thuê Hà Nội</li>
-                        <li class="list-group-item">Văn phòng cho thuê Hưng Yên</li>
-                        <li class="list-group-item">Văn phòng cho thuê Điện Biên</li>
-                        <li class="list-group-item">Văn phòng cho thuê Lai Châu</li>
+                    <ul style="list-style: none;" class="list-group right-side">
+                        <li class="list-group-item">
+                            <a href="/BatDongSan">
+                                Tất cả
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?dientich=50">
+                                Dưới 50m&#178
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?dientich=100">
+                                Diện tích từ 50-100m&#178
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?dientich=150">
+                                Diện tích từ 100-150m&#178
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?dientich=200">
+                                Diện tích từ 150-200m&#178
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?dientich=250">
+                                Diện tích từ 200-250m&#178
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?dientich=300">
+                                Diện tích từ 250-300m&#178
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?dientich=350">
+                                Diện tích từ 300-350m&#178
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?dientich=351">
+                                Diện tích lớn hơn 350m&#178
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -340,12 +409,48 @@
                     Xem theo mức giá
                 </div>
                 <div>
-                    <ul style="list-style:none;" class="list-group">
-                        <li class="list-group-item">Tất cả</li>
-                        <li class="list-group-item">Văn phòng cho thuê Hà Nội</li>
-                        <li class="list-group-item">Văn phòng cho thuê Hưng Yên</li>
-                        <li class="list-group-item">Văn phòng cho thuê Điện Biên</li>
-                        <li class="list-group-item">Văn phòng cho thuê Lai Châu</li>
+                    <ul style="list-style: none;" class="list-group right-side">
+                        <li class="list-group-item">
+                            <a href="/BatDongSan">
+                                Tất cả
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?gia=100">
+                                Giá nhỏ hơn 100$
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?gia=200">
+                                Giá từ 100-200$
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?gia=300">
+                                Giá từ 200-300$
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?gia=400">
+                                Giá từ 300-400$
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?gia=500">
+                                Giá từ 400-500$
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?gia=600">
+                                Giá từ 500-600$
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?gia=601">
+                                Giá lớn hơn 600$
+                            </a>
+                        </li>
+
                     </ul>
                 </div>
             </div>

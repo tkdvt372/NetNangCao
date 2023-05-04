@@ -1,14 +1,15 @@
 ﻿using BaiTapLonNet.Interface.Manager;
 using BaiTapLonNet.Manager;
 using BaiTapLonNet.Models;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.DotNet.Scaffolding.Shared.Messaging;
-using System.Linq;
 
 namespace BaiTapLonNet.Controllers
 {
     public class BatDongSanController : Controller
     {
+
         private readonly IBatDongSanManager _batDongSanManager;
         public BatDongSanController(BatDongSanManager batDongSanManager)
         {
@@ -39,33 +40,44 @@ namespace BaiTapLonNet.Controllers
                     gia = Double.Parse(gia)
                 });
         }
-        /*[HttpGet]
-        public IActionResult Create()
+        [HttpGet]
+        public IActionResult KyGui()
         {
             return View();
         }
         [HttpPost]
-        public IActionResult Create(BatDongSan batDongSan)
+        public async Task<IActionResult> KyGuiAsync(IFormFileCollection files)
         {
-            string message = "";
-            bool isSaved = _batDongSanManager.Add(batDongSan);
-            if (isSaved)
+            BatDongSan temp = new BatDongSan();
+            temp.HinhAnh = new List<string> {};
+            var cloudinary = new Cloudinary(new Account("df6xlriko", "672971318197823", "Rq88j3TExUXgfEgQUNomHBGWEpg"));
+            int i = 0;
+            foreach (var file in files)
             {
-                return RedirectToAction("TrangChu", "Home");
+                if (file.Length > 0)
+                {
+                    var uploadParams = new ImageUploadParams()
+                    {
+                        File = new FileDescription(file.FileName, file.OpenReadStream())
+                    };
+                    var uploadResult = cloudinary.Upload(uploadParams);
+                    temp.HinhAnh.Add(uploadResult.SecureUrl.AbsoluteUri);
+                    i++;
+                }
             }
-            else
-            {
-                message = "Thêm BDS thất bại";
-            }
-            ViewBag.Message = message;
-            return View();
-        }*/
+            temp.TenToaNha = Request.Form["ten"];
+            return Json(new {temp});
+        }
 
         [HttpGet]
         public IActionResult ChiTiet(int id)
         {
             var bds = _batDongSanManager.GetBDSById(id);
             return View(bds);
+        }
+        public IActionResult Sua()
+        {
+            return View();
         }
     }
 }

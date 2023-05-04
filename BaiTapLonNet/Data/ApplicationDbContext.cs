@@ -35,7 +35,7 @@ namespace BaiTapLonNet.Data
                 e.Property(e => e.GiaCapNhat).IsRequired().HasDefaultValue(DateTime.Now);
                 e.Property(e => e.DiaChi).IsRequired().HasMaxLength(200);
                 e.Property(e => e.SoTang).IsRequired().HasDefaultValue(1);
-                e.Property(e => e.HinhAnh)
+                e.Property(e => e.HinhAnh).HasDefaultValue(new List<string> { })
                 .IsRequired()
                 .HasConversion(
                         v => JsonConvert.SerializeObject(v),
@@ -50,7 +50,7 @@ namespace BaiTapLonNet.Data
                 e.HasKey(e => e.MaChiTiet);
                 e.HasOne(e => e.BatDongSan).WithOne(e => e.ChiTietVanPhong).HasForeignKey<ChiTietVanPhong>(e => e.MaBatDongSan); ;
                 e.Property(e => e.TongQuan)
-                .IsRequired()
+                .IsRequired().HasDefaultValue(new List<string> {"", "", "", "", "", "", "", "", "", "" })
                 .HasConversion(
                 v => JsonConvert.SerializeObject(v),
                 v => JsonConvert.DeserializeObject<List<string>>(v)

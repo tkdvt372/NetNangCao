@@ -9,9 +9,11 @@ namespace BaiTapLonNet.Controllers
     public class TaiKhoanController : Controller
     {
         private readonly ITaiKhoanManager _taiKhoanManager;
-        public TaiKhoanController(TaiKhoanManager taiKhoanManager)
+        private readonly IBatDongSanManager _batDongSanManager;
+        public TaiKhoanController(TaiKhoanManager taiKhoanManager, BatDongSanManager batDongSanManager)
         {
             _taiKhoanManager = taiKhoanManager;
+            _batDongSanManager = batDongSanManager;
         }
         [HttpGet]
         public IActionResult DangNhap()
@@ -25,7 +27,7 @@ namespace BaiTapLonNet.Controllers
             if (taikhoan != null)
             {
                 HttpContext.Session.SetString("email", email);
-                return RedirectToAction("Index", "BatDongSan");
+                return RedirectToAction("HoSo", "TaiKhoan");
             }
             else
             {
@@ -62,12 +64,40 @@ namespace BaiTapLonNet.Controllers
         public IActionResult HoSo()
         {
             string email = HttpContext.Session.GetString("email");
+            if(email == null)
+            {
+                return RedirectToAction("DangNhap", "TaiKhoan");
+            }
             var hoso = _taiKhoanManager.HoSo(email);
+            var taikhoan = _taiKhoanManager.GetAll();
+            var bds = _batDongSanManager.GetAll();
+            var result = from b in bds
+                         join t in taikhoan
+                         on b.MaTaiKhoan equals t.MaTaiKhoan
+                         where t.MaTaiKhoan == hoso.MaTaiKhoan
+                         select new
+                         {
+                             b.MaBatDongSan,
+                             b.HinhAnh,
+                             b.TenToaNha,
+                             b.DienTichSan,
+                             b.DienTichChoThue,
+                             b.PhiQuanLy,
+                             b.VAT,
+                             b.Gia,
+                             b.Loai
+
+                         };
+            ViewBag.listBDS = result.ToList();
             return View(hoso);
         }
         public IActionResult SuaThongTin()
         {
             string email = HttpContext.Session.GetString("email");
+            if (email == null)
+            {
+                return RedirectToAction("DangNhap", "TaiKhoan");
+            }
             var hoso = _taiKhoanManager.HoSo(email);
             return View(hoso);
         }

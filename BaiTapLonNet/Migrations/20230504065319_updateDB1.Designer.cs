@@ -4,6 +4,7 @@ using BaiTapLonNet.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BaiTapLonNet.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230504065319_updateDB1")]
+    partial class updateDB1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,13 +56,11 @@ namespace BaiTapLonNet.Migrations
                     b.Property<DateTime>("GiaCapNhat")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 5, 4, 15, 38, 30, 1, DateTimeKind.Local).AddTicks(7704));
+                        .HasDefaultValue(new DateTime(2023, 5, 4, 13, 53, 19, 767, DateTimeKind.Local).AddTicks(1575));
 
                     b.Property<string>("HinhAnh")
                         .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("[]");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Loai")
                         .IsRequired()

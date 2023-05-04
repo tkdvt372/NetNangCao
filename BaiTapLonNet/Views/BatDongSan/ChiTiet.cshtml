@@ -2,6 +2,15 @@
 @model BaiTapLonNet.Models.BatDongSan
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <style>
+    .right-side > li > a{
+        text-decoration:none;
+        color: inherit;
+    }
+
+    .right-side > li > a:hover {
+            color: #0d509d;
+            text-decoration:underline;
+    }
     .card-bds:hover {
         cursor: pointer;
         border: 1px solid rgba(60,144,240,0.8);
@@ -44,7 +53,6 @@
 
     .hinhanh {
         grid-area: image;
-
     }
 
     .tongquan {
@@ -78,42 +86,42 @@
         overflow: hidden;
         margin-top: 15px;
         margin: 0;
-        position:relative;
-    }
-
-    .filter_h ul {
-        float: right;
-    }
-
-    .filter_h ul > li {
-        float: left;
-        padding: 0 10px;
         position: relative;
     }
 
-    .filter_h ul > li > a {
-        color: #fff;
-        text-decoration: none;
-        font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"
-    }
+        .filter_h ul {
+            float: right;
+        }
 
-    .filter_h ul > li::after {
-        content: "";
-        width: 1px;
-        height: 10px;
-        background: #fff;
-        position: absolute;
-        top: 8px;
-        right: 0;
-    }
+            .filter_h ul > li {
+                float: left;
+                padding: 0 10px;
+                position: relative;
+            }
 
-    .filter_h ul > li:last-child::after {
-        display: none;
-    }
+                .filter_h ul > li > a {
+                    color: #fff;
+                    text-decoration: none;
+                    font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"
+                }
 
-    .filter_h ul > li:last-child {
-        padding-right: 0;
-    }
+                .filter_h ul > li::after {
+                    content: "";
+                    width: 1px;
+                    height: 10px;
+                    background: #fff;
+                    position: absolute;
+                    top: 8px;
+                    right: 0;
+                }
+
+                .filter_h ul > li:last-child::after {
+                    display: none;
+                }
+
+                .filter_h ul > li:last-child {
+                    padding-right: 0;
+                }
 
     .ul_os_h > li {
         float: left;
@@ -138,7 +146,7 @@
 
     <div style="display:flex;flex-direction:row;gap:20px;margin:0 50px" class="border-primary">
 
-        <input type="text" name="tukhoa" class="form-control my-3" style="width:30vw;" placeholder="Nhập từ khoá" />
+        <input type="text" name="tukhoa" class="form-control my-3" style="width:31vw;" placeholder="Nhập từ khoá" />
         <select name="tinh" class="form-select form-select-sm my-3" style="width:30vw;" id="city" aria-label=".form-select-lg example">
             <option selected>Tỉnh</option>
         </select>
@@ -151,22 +159,32 @@
         </select>
     </div>
     <div style="display:flex;flex-direction:row;gap:20px;margin:0 50px;" class="border-primary">
-        <select name="loai" class="form-select form-select-sm my-3" style="width:31vw;" aria-label=".form-select-sm example">
+        <select name="loai" class="form-select form-select-sm my-3" style="width:30vw;" aria-label=".form-select-sm example">
             <option selected>Loại</option>
             <option value="Văn phòng">Văn phòng</option>
             <option value="Nhà ở">Nhà ở</option>
         </select>
         <select name="dientich" class="form-select form-select-sm my-3" style="width:30vw;" aria-label=".form-select-sm example">
             <option selected>Tất cả diện tích</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+            <option value="50"> <50m&#178 </option>
+            <option value="100">50-100m&#178</option>
+            <option value="150">100-150m&#178</option>
+            <option value="200">150-200m&#178</option>
+            <option value="250">200-250m&#178</option>
+            <option value="300">250-300&#178</option>
+            <option value="350">300-350&#178</option>
+            <option value="351">>350m&#178</option>
         </select>
         <select name="gia" class="form-select form-select-sm my-3" style="width:30vw;" aria-label=".form-select-sm example">
             <option selected>Tất cả giá</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+            <option value="0">Thoả thuận</option>
+            <option value="100"><100$</option>
+            <option value="200">100-200$</option>
+            <option value="300">200-300$</option>
+            <option value="400">300-400$</option>
+            <option value="500">400-500</option>
+            <option value="600">500-600$</option>
+            <option value="601">>600$</option>
         </select>
 
         <input type="submit" class="btn btn-primary my-3" style="width:30vw;" value="Tìm kiếm">
@@ -349,12 +367,32 @@
                     Văn phòng cho thuê
                 </div>
                 <div>
-                    <ul style="list-style: none;" class="list-group">
-                        <li class="list-group-item">Tất cả</li>
-                        <li class="list-group-item">Văn phòng cho thuê Hà Nội</li>
-                        <li class="list-group-item">Văn phòng cho thuê Hưng Yên</li>
-                        <li class="list-group-item">Văn phòng cho thuê Điện Biên</li>
-                        <li class="list-group-item">Văn phòng cho thuê Lai Châu</li>
+                    <ul style="list-style: none;" class="list-group right-side">
+                        <li class="list-group-item">
+                            <a href="/BatDongSan">
+                                Tất cả
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?tinh=Thành phố Hà Nội">
+                                Văn phòng cho thuê Hà Nội
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?tinh=Tỉnh Hưng Yên">
+                                Văn phòng cho thuê Hưng Yên
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?tinh=Tỉnh Thái Bình">
+                                Văn phòng cho thuê Thái Bình
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?tinh=Tỉnh Bắc Ninh">
+                                Văn phòng cho thuê Bắc Ninh
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -366,12 +404,52 @@
                     Xem theo diện tích
                 </div>
                 <div>
-                    <ul style="list-style: none;" class="list-group">
-                        <li class="list-group-item">Tất cả</li>
-                        <li class="list-group-item">Văn phòng cho thuê Hà Nội</li>
-                        <li class="list-group-item">Văn phòng cho thuê Hưng Yên</li>
-                        <li class="list-group-item">Văn phòng cho thuê Điện Biên</li>
-                        <li class="list-group-item">Văn phòng cho thuê Lai Châu</li>
+                    <ul style="list-style: none;" class="list-group right-side">
+                        <li class="list-group-item">
+                            <a href="/BatDongSan">
+                                Tất cả
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?dientich=50">
+                                Dưới 50m&#178
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?dientich=100">
+                                Diện tích từ 50-100m&#178
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?dientich=150">
+                                Diện tích từ 100-150m&#178
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?dientich=200">
+                                Diện tích từ 150-200m&#178
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?dientich=250">
+                                Diện tích từ 200-250m&#178
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?dientich=300">
+                                Diện tích từ 250-300m&#178
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?dientich=350">
+                                Diện tích từ 300-350m&#178
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?dientich=351">
+                                Diện tích lớn hơn 350m&#178
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -383,12 +461,48 @@
                     Xem theo mức giá
                 </div>
                 <div>
-                    <ul style="list-style: none;" class="list-group">
-                        <li class="list-group-item">Tất cả</li>
-                        <li class="list-group-item">Văn phòng cho thuê Hà Nội</li>
-                        <li class="list-group-item">Văn phòng cho thuê Hưng Yên</li>
-                        <li class="list-group-item">Văn phòng cho thuê Điện Biên</li>
-                        <li class="list-group-item">Văn phòng cho thuê Lai Châu</li>
+                    <ul style="list-style: none;" class="list-group right-side">
+                        <li class="list-group-item">
+                            <a href="/BatDongSan">
+                                Tất cả
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?gia=100">
+                                Giá nhỏ hơn 100$
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?gia=200">
+                                Giá từ 100-200$
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?gia=300">
+                                Giá từ 200-300$
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?gia=400">
+                                Giá từ 300-400$
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?gia=500">
+                                Giá từ 400-500$
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?gia=600">
+                                Giá từ 500-600$
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="/BatDongSan?gia=601">
+                                Giá lớn hơn 600$
+                            </a>
+                        </li>
+
                     </ul>
                 </div>
             </div>

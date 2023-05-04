@@ -32,6 +32,7 @@ namespace BaiTapLonNet.Manager
             var batDongSans = GetAll().ToList();
             if (loai == "")
             {
+
                 if (dientich == 0 && gia == 0)
                 {
                     var result = from b in batDongSans
@@ -160,13 +161,6 @@ namespace BaiTapLonNet.Manager
             }
             else
             {
-
-                if (tinh == "Tỉnh")
-                    tinh = "";
-                if (huyen == "Quận/huyện")
-                    huyen = "";
-                if (xa == "Phường/Xã")
-                    xa = "";
                 if (dientich == 0 && gia == 0)
                 {
                     var result = from b in batDongSans
