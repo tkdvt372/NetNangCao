@@ -48,18 +48,12 @@ namespace BaiTapLonNet.Data
 
                 e.ToTable("ChiTietVanPhong");
                 e.HasKey(e => e.MaChiTiet);
-                e.HasOne(e => e.BatDongSan).WithOne(e => e.ChiTietVanPhong).HasForeignKey<ChiTietVanPhong>(e => e.MaBatDongSan); ;
+                e.HasOne(e => e.BatDongSan).WithOne(e => e.ChiTietVanPhong).HasForeignKey<ChiTietVanPhong>(e => e.MaBatDongSan);
                 e.Property(e => e.TongQuan)
                 .IsRequired().HasDefaultValue(new List<string> {"", "", "", "", "", "", "", "", "", "" })
                 .HasConversion(
                 v => JsonConvert.SerializeObject(v),
                 v => JsonConvert.DeserializeObject<List<string>>(v)
-                );
-                e.Property(e => e.GiaVaDieuKien)
-                .IsRequired()
-                .HasConversion(
-                        v => JsonConvert.SerializeObject(v),
-                        v => JsonConvert.DeserializeObject<List<string>>(v)
                 );
             });
 

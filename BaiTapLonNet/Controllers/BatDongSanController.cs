@@ -4,6 +4,8 @@ using BaiTapLonNet.Models;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 
 namespace BaiTapLonNet.Controllers
 {
@@ -11,9 +13,14 @@ namespace BaiTapLonNet.Controllers
     {
 
         private readonly IBatDongSanManager _batDongSanManager;
-        public BatDongSanController(BatDongSanManager batDongSanManager)
+        private readonly ITaiKhoanManager _taiKhoanManager;
+        private readonly IChiTietVanPhongManager _chiTietVanPhongManager;
+        
+        public BatDongSanController(BatDongSanManager batDongSanManager, TaiKhoanManager taiKhoanManager,ChiTietVanPhongManager chiTietVanPhong)
         {
             _batDongSanManager = batDongSanManager;
+            _taiKhoanManager = taiKhoanManager;
+            _chiTietVanPhongManager = chiTietVanPhong;
         }
         public IActionResult Index(string loai = "", string tukhoa = "", string tinh = "", string huyen = "", string xa = "", double dientich=0,double gia=0)
         {
@@ -48,10 +55,16 @@ namespace BaiTapLonNet.Controllers
         [HttpPost]
         public async Task<IActionResult> KyGuiAsync(IFormFileCollection files)
         {
+            string email =  HttpContext.Session.GetString("email");
+            if (email == null)
+            {
+                return RedirectToAction("DangNhap", "TaiKhoan");
+            }
+            var cloudinary = new Cloudinary(new Account("df6xlriko", "672971318197823", "Rq88j3TExUXgfEgQUNomHBGWEpg"));
+            var hoso = _taiKhoanManager.HoSo(email);
             BatDongSan temp = new BatDongSan();
             temp.HinhAnh = new List<string> {};
-            var cloudinary = new Cloudinary(new Account("df6xlriko", "672971318197823", "Rq88j3TExUXgfEgQUNomHBGWEpg"));
-            int i = 0;
+            
             foreach (var file in files)
             {
                 if (file.Length > 0)
@@ -62,11 +75,27 @@ namespace BaiTapLonNet.Controllers
                     };
                     var uploadResult = cloudinary.Upload(uploadParams);
                     temp.HinhAnh.Add(uploadResult.SecureUrl.AbsoluteUri);
-                    i++;
                 }
             }
             temp.TenToaNha = Request.Form["ten"];
-            return Json(new {temp});
+            temp.DienTichSan = Double.Parse(Request.Form["dsan"]);
+            temp.DienTichChoThue = Double.Parse(Request.Form["dthue"]);
+            temp.PhiQuanLy = Double.Parse(Request.Form["quanly"]);
+            temp.VAT = Double.Parse(Request.Form["vat"]);
+            temp.PhiGuiOto = Double.Parse(Request.Form["oto"]);
+            temp.PhiGuiXeMay = Double.Parse(Request.Form["xemay"]);
+            temp.SoDienThoai = Request.Form["sdt"];
+            temp.Gia = Double.Parse(Request.Form["gia"]);
+            temp.DiaChi = Request.Form["sonha"] + ", " + Request.Form["tinh"] + ", " + Request.Form["huyen"] + ", " + Request.Form["xa"];
+            temp.SoTang = Int32.Parse(Request.Form["tang"]);
+            temp.Loai = Request.Form["loai"];
+            temp.MaTaiKhoan = hoso.MaTaiKhoan;
+            var isSaved = _batDongSanManager.Add(temp);
+            if (isSaved)
+            {
+                return RedirectToAction("HoSo", "TaiKhoan");
+            }
+            return View();
         }
 
         [HttpGet]
@@ -75,9 +104,107 @@ namespace BaiTapLonNet.Controllers
             var bds = _batDongSanManager.GetBDSById(id);
             return View(bds);
         }
-        public IActionResult Sua()
+        [HttpGet]
+        public IActionResult Sua(int id)
         {
+            var result = _batDongSanManager.GetBDSById(id);
+            return View(result);
+        }
+        public IActionResult Sua1()
+        {
+            
             return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult>  Sua(BatDongSan batDongSan,IFormCollection form,IFormFileCollection files)
+        {
+            string email = HttpContext.Session.GetString("email");
+            if (email == null)
+            {
+                return RedirectToAction("DangNhap", "TaiKhoan");
+            }
+            
+            var hoso = _taiKhoanManager.HoSo(email);
+            if (files != null)
+            {
+                var bds = _batDongSanManager.GetBDSById(batDongSan.MaBatDongSan);
+                var cloudinary = new Cloudinary(new Account("df6xlriko", "672971318197823", "Rq88j3TExUXgfEgQUNomHBGWEpg"));
+                if (bds.HinhAnh.Count > 0)
+                {
+                    foreach (var url in bds.HinhAnh)
+                    {
+                        var uri = new Uri(url);
+                        var publicId = uri.Segments.Last().Split('.')[0];
+                        var deleteParams = new DeletionParams(publicId);
+                        cloudinary.Destroy(deleteParams);
+                    }
+                }
+                batDongSan.HinhAnh = new List<string> { };
+                batDongSan.MaTaiKhoan = hoso.MaTaiKhoan;
+                foreach (var file in files)
+                {
+                    if (file.Length > 0)
+                    {
+                        var uploadParams = new ImageUploadParams()
+                        {
+                            File = new FileDescription(file.FileName, file.OpenReadStream())
+                        };
+                        var uploadResult = cloudinary.Upload(uploadParams);
+                        batDongSan.HinhAnh.Add(uploadResult.SecureUrl.AbsoluteUri);
+                    }
+                }
+            }
+
+            ChiTietVanPhong temp;
+            var chitiet = _chiTietVanPhongManager.GetFirstOrDefault(e => e.MaBatDongSan == batDongSan.MaBatDongSan);
+            if (chitiet == null)
+            {
+                temp = new ChiTietVanPhong() { MaBatDongSan = batDongSan.MaBatDongSan};
+            }
+            else
+            {
+                temp = chitiet;
+            }
+            List<string> list = new List<string>();
+            List<string> inputNames = new List<string>();
+            foreach (string key in form.Keys)
+            {
+                if (key.StartsWith("input-"))
+                {
+                    inputNames.Add(key);
+                }
+            }
+            int inputCount = inputNames.Count;
+            if (inputCount > 2)
+            {
+                for (int i = 1; i <= inputCount; i++)
+                {
+                    string inputName = "input-" + i;
+                    if (inputNames.Contains(inputName))
+                    {
+                        string inputValue = form[inputName];
+                        list.Add(inputValue);
+                    }
+                }
+            }
+            List<string> outputArray = new List<string> { };
+            int h, k;
+            for (h = 0, k = 0; h < list.Count; h += 2, k++)
+            {
+                if (h == list.Count - 1)
+                {
+                    outputArray.Add(list[h]);
+                }
+                else
+                {
+                    outputArray.Add(list[h] + ":" + list[h + 1]);
+                }
+            }
+            _batDongSanManager.Update(batDongSan);
+            temp.TongQuan = outputArray;
+            temp.MaBatDongSan = batDongSan.MaBatDongSan;
+            _chiTietVanPhongManager.Add(temp);
+            return RedirectToAction("HoSo", "TaiKhoan");
         }
     }
 }

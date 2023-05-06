@@ -4,6 +4,7 @@ using BaiTapLonNet.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BaiTapLonNet.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230506031921_updatedv2")]
+    partial class updatedv2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,7 +56,7 @@ namespace BaiTapLonNet.Migrations
                     b.Property<DateTime>("GiaCapNhat")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 5, 6, 10, 26, 15, 996, DateTimeKind.Local).AddTicks(8191));
+                        .HasDefaultValue(new DateTime(2023, 5, 6, 10, 19, 21, 672, DateTimeKind.Local).AddTicks(380));
 
                     b.Property<string>("HinhAnh")
                         .IsRequired()
@@ -118,6 +121,10 @@ namespace BaiTapLonNet.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MaChiTiet"));
+
+                    b.Property<string>("GiaVaDieuKien")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("MaBatDongSan")
                         .HasColumnType("int");
