@@ -1,0 +1,13 @@
+﻿<h1 class="mt-3">QUÊN MẬT KHẨU</h1>
+<form asp-action="QuenMatKhau" asp-controller="TaiKhoan" method="post">
+    <div class="form-group">
+        <label  class="control-label">
+            Email
+        </label>
+        <input name="email" class="form-control" placeholder="vidu@gmail.com" />
+    </div>
+    <span style="color:red;">@ViewBag.text</span>
+    <div class="form-group">
+        <input type="submit" value="Xác nhận" class="btn btn-primary my-3" />
+    </div>
+</form>

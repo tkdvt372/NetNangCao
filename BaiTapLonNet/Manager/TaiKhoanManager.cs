@@ -47,6 +47,13 @@ namespace BaiTapLonNet.Manager
         {
             return GetFirstOrDefault(p => p.Email == email);
         }
-        
+
+        public bool DoiMatKhau(string email,string matkhau)
+        {
+            var tk = GetFirstOrDefault(e => e.Email == email);
+            var matKhauMoi = maHoaMatKhau(matkhau);
+            tk.MatKhau = matKhauMoi;
+            return Update(tk);
+        }
     }
 }

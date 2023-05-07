@@ -64,6 +64,7 @@ namespace BaiTapLonNet.Data
                 e.Property(e => e.HoVaTen).IsRequired().HasMaxLength(50);
                 e.HasIndex(e => e.CCCD).IsUnique();
                 e.HasIndex(e => e.Email).IsUnique();
+                e.Property(e => e.HinhAnh).HasDefaultValue("https://res.cloudinary.com/df6xlriko/image/upload/v1683367962/avt_xl7z3r.jpg");
                 e.Property(e => e.MatKhau).IsRequired().HasMaxLength(50);
             });
         }

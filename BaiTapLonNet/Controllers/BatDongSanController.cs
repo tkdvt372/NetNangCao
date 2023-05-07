@@ -53,7 +53,7 @@ namespace BaiTapLonNet.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> KyGuiAsync(IFormFileCollection files)
+        public async Task<IActionResult> KyGui(IFormFileCollection files)
         {
             string email =  HttpContext.Session.GetString("email");
             if (email == null)
@@ -104,16 +104,20 @@ namespace BaiTapLonNet.Controllers
             var bds = _batDongSanManager.GetBDSById(id);
             return View(bds);
         }
+    
+
         [HttpGet]
         public IActionResult Sua(int id)
         {
+            string email = HttpContext.Session.GetString("email");
+            if (email == null)
+            {
+                return RedirectToAction("DangNhap", "TaiKhoan");
+            }
             var result = _batDongSanManager.GetBDSById(id);
+            var chitiet = _chiTietVanPhongManager.GetFirstOrDefault(e => e.MaBatDongSan == result.MaBatDongSan);
+            ViewBag.ChiTiet = chitiet;
             return View(result);
-        }
-        public IActionResult Sua1()
-        {
-            
-            return View();
         }
         [HttpPost]
         public async Task<IActionResult>  Sua(BatDongSan batDongSan,IFormCollection form,IFormFileCollection files)
@@ -123,11 +127,12 @@ namespace BaiTapLonNet.Controllers
             {
                 return RedirectToAction("DangNhap", "TaiKhoan");
             }
-            
+            var bds = _batDongSanManager.GetBDSById(batDongSan.MaBatDongSan);
             var hoso = _taiKhoanManager.HoSo(email);
-            if (files != null)
+            batDongSan.MaTaiKhoan = hoso.MaTaiKhoan;
+            if (files.Count > 0)
             {
-                var bds = _batDongSanManager.GetBDSById(batDongSan.MaBatDongSan);
+                
                 var cloudinary = new Cloudinary(new Account("df6xlriko", "672971318197823", "Rq88j3TExUXgfEgQUNomHBGWEpg"));
                 if (bds.HinhAnh.Count > 0)
                 {
@@ -140,7 +145,7 @@ namespace BaiTapLonNet.Controllers
                     }
                 }
                 batDongSan.HinhAnh = new List<string> { };
-                batDongSan.MaTaiKhoan = hoso.MaTaiKhoan;
+                
                 foreach (var file in files)
                 {
                     if (file.Length > 0)
@@ -153,6 +158,10 @@ namespace BaiTapLonNet.Controllers
                         batDongSan.HinhAnh.Add(uploadResult.SecureUrl.AbsoluteUri);
                     }
                 }
+            }
+            else
+            {
+                batDongSan.HinhAnh = bds.HinhAnh;
             }
 
             ChiTietVanPhong temp;
@@ -201,9 +210,21 @@ namespace BaiTapLonNet.Controllers
                 }
             }
             _batDongSanManager.Update(batDongSan);
+            
+            temp.TongQuan.Clear();
             temp.TongQuan = outputArray;
             temp.MaBatDongSan = batDongSan.MaBatDongSan;
-            _chiTietVanPhongManager.Add(temp);
+            var test = _chiTietVanPhongManager.GetFirstOrDefault(x => x.MaBatDongSan == bds.MaBatDongSan);
+            if (test != null)
+            {
+                _chiTietVanPhongManager.Update(temp);
+            }
+            else
+            {
+                _chiTietVanPhongManager.Add(temp);
+               
+            }
+            
             return RedirectToAction("HoSo", "TaiKhoan");
         }
     }

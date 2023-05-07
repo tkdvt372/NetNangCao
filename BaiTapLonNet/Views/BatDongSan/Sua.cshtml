@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Sua";
+    int dem = 0;
 }
 
 <h1 style="margin-left:320px;">SỬA THÔNG TIN BẤT ĐỘNG SẢN</h1>
@@ -90,10 +91,20 @@
             </div>
             <div id="inputs-container">
                 <h3 class="my-3">Tổng quan về bất động sản</h3>
-                <div class="input-group gap-3 mb-3">
-                    <input class="form-control" placeholder="Nhập tiêu đề" type="text" id="input-1" name="input-1">
-                    <input class="form-control" placeholder="Nhập nội dung" type="text" id="input-2" name="input-2">
-                </div>
+              
+                @for (int i = 0; i < ViewBag.ChiTiet.TongQuan.Count; i++)
+                {
+                    string[] chuoiTach = ViewBag.ChiTiet.TongQuan[i].Split(':');
+                    string chuoi1 = chuoiTach[0].Trim();
+                    string chuoi2 = chuoiTach[1].Trim();
+                    ++dem;
+                    <div class="input-group gap-3 mb-3">
+                        <input class="form-control" value="@chuoi1" placeholder="Nhập tiêu đề" type="text" id="input-@dem" name="input-@dem">
+                        @{++dem;}
+                        <input class="form-control" value="@chuoi2" placeholder="Nhập nội dung" type="text" id="input-@dem" name="input-@dem">
+                    </div>
+                }
+                
             </div>
             <button class="btn btn-primary my-3" type="button" id="add-input-button">Thêm tổng quan</button>
             <div class="form-group" style="display:flex;justify-content:space-between;">
@@ -126,7 +137,10 @@
         }
     }
     var addButton = document.getElementById("add-input-button");
-    var inputCount = 3;
+    var inputs = document.getElementsByTagName("input");
+
+    var inputCount = $("input[name^='input-']").length + 1;
+ 
     addButton.addEventListener("click", function () {
         var newInputsContainer = document.createElement('div');
         newInputsContainer.className = 'input-group gap-3 mb-3';

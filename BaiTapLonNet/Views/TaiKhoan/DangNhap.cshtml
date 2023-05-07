@@ -44,7 +44,11 @@
         <input type="text" class="form-control" name="email" placeholder="Nhập email" required="Vui lòng nhập email" autofocus="" />
         <input type="password" class="form-control" name="matkhau" placeholder="Nhập mật khẩu" required="" />
         <button class="btn btn-lg btn-primary btn-block" style="width:100%;" type="submit">Đăng nhập</button>
-        <a asp-action="DangKy" asp-controller="TaiKhoan" style="margin-top:10px;">Đăng ký</a>
+        <span style="color:red;">@ViewBag.text</span>
+        <div style="display:flex;justify-content:space-between;" class="mt-3">
+            <a asp-action="DangKy" asp-controller="TaiKhoan">Đăng ký</a>
+            <a asp-action="QuenMatKhau" asp-controller="TaiKhoan">Quên mật khẩu?</a>
+        </div>
         <br />
     </form>
 </div>
