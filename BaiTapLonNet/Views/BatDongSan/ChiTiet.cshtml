@@ -2,6 +2,9 @@
 @model BaiTapLonNet.Models.BatDongSan
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <style>
+    th, td {
+        border: 1px solid;
+    }
     .right-side > li > a{
         text-decoration:none;
         color: inherit;
@@ -354,7 +357,38 @@
                     <p style="width: 92%;margin-left: 35px;color: #fff;text-align: center;font-size: 16px;font-weight: 700;padding: 10px;background: #cb1a23;">@Model.Gia USD</p>
                     <a href="#" class="btn btn-success" style="width: 92%; margin-left: 35px;">Đăng ký đi xem</a>
                 </div>
-                <div class="chitiet" style="border:1px solid black;"></div>
+                <div class="chitiet" >
+                    <span style="font-weight:600;font-size:16px;font-family: arial,helvetica,sans-serif;color: #0d509d !important;">TỔNG QUAN VÈ TOÀ NHÀ @Model.TenToaNha.ToUpper() </span>
+                    <table border="1" cellpadding="1" cellspacing="0" style="font-size:13px; text-align:justify; width:100%;border-collapse: collapse;">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span style="font-family:arial,helvetica,sans-serif"><strong>Tên tòa nhà</strong></span><br>
+                                    <span style="font-size:13px">&nbsp;The Metropolitan Tower</span>
+                                </td>
+                                <td>
+                                    <span style="font-family:arial,helvetica,sans-serif">
+                                        <strong>Hướng toà nhà</strong><br>
+                                        Đông Bắc
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span style="font-family:arial,helvetica,sans-serif"><strong>Vị trí tòa nhà</strong></span><br>
+                                    <span style="font-size:13px">235 Đồng Khởi, Bến Nghé, Quận 1, Thành Phố Hồ Chí Minh</span>
+                                </td>
+                                <td>
+                                    <span style="font-family:arial,helvetica,sans-serif">
+                                        <strong>Số thang máy</strong><br>
+                                        6 thang máy
+                                    </span>
+                                </td>
+                            </tr>
+                             
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         <div>
