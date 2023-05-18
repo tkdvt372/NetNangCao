@@ -1,0 +1,144 @@
+﻿@model BaiTapLonNet.Models.TaiKhoan
+
+@{
+    ViewData["Title"] = "HoSo";
+}
+<style>
+    .imageavt{
+        opacity: 0%;
+    }
+    #btn-avt:hover {
+         transition:0.5s all ease;
+         opacity:0%;
+    }
+
+    #btn-avt:hover:not(:focus) {
+        opacity: 100%;
+    }
+
+    
+</style>
+<h1>Hồ sơ cá nhân</h1>
+
+<div>
+    <hr />
+    <div style="position:relative;">
+        <img class="my-3 " style="height:200px;width:200px;border-radius:50%;" src="@Model.HinhAnh" alt="Ảnh đại diện" />
+        <button class="imageavt" style="position:absolute;top:35%;left: 6%;border-radius: 50%;" id="btn-avt" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            <i class="fa-solid fa-pen-to-square"></i>
+        </button>
+    </div>
+    <dl class="row">
+        <dt class="col-sm-3">
+            Họ và tên:
+        </dt>
+        <dd class="col-sm-9">
+            @Model.HoVaTen
+        </dd>
+        <dt class="col-sm-3">
+            Căn cước công dân:
+        </dt>
+        <dd class="col-sm-9">
+            @Model.CCCD
+        </dd>
+        <dt class="col-sm-3">
+            Email:
+        </dt>
+        <dd class="col-sm-9">
+            @Model.Email
+        </dd>
+
+    </dl>
+    <div>
+        <a class="btn btn-primary" asp-action="SuaThongTin">Sửa thông tin</a>
+    </div>
+</div>
+
+<div class="mt-5">
+    <hr />
+    <div class="my-3" style="display:flex;justify-content:space-between;align-items:center;">
+        <h2>Bất động sản đã đăng</h2>
+        <a class="btn btn-primary" asp-action="KyGui" asp-controller="BatDongSan">Ký gửi</a>
+    </div>
+
+    <table class="table table-bordered">
+        <tr>
+            <th>Mã BDS</th>
+            <th>Hình ảnh</th>
+            <th style="width: 20%;">Tên BDS</th>
+            <th>Diện tích sàn</th>
+            <th>Diện tích cho thuê</th>
+            <th>Phí quản lý</th>
+            <th>VAT</th>
+            <th>Giá</th>
+            <th>Loại</th>
+            <th></th>
+        </tr>
+        @foreach (var item in ViewBag.listBDS)
+        {
+            <tr>
+                <td>@item.MaBatDongSan</td>
+                <td><img style="height:50px;width:50px;" src="@item.HinhAnh[0]" alt="" /></td>
+                <td style="height:50px;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;">@item.TenToaNha</td>
+                <td>@item.DienTichSan</td>
+                <td>@item.DienTichChoThue</td>
+                <td>@item.PhiQuanLy</td>
+                <td>@item.VAT</td>
+                <td>@item.Gia</td>
+                <td>@item.Loai</td>
+                <td>
+                    <a style="text-decoration:none;" asp-action="ChiTiet" asp-controller="BatDongSan" asp-route-id="@item.MaBatDongSan">Chi tiết</a> |
+                    <a style="text-decoration:none;" asp-action="Sua" asp-controller="BatDongSan" asp-route-id="@item.MaBatDongSan">Sửa</a> |
+                    <a style="text-decoration:none;" asp-action="Xoa" asp-controller="BatDongSan" asp-route-id="@item.MaBatDongSan">Xoá</a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+<div class="modal" id="staticBackdrop" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <form asp-action="ThayAvatar" asp-controller="TaiKhoan" method="post" enctype="multipart/form-data">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thay đổi ảnh đại diện</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="mb-3">
+                        <label for="files" class="form-label">Chọn hình ảnh </label>
+                        <input class="form-control" onchange="previewImages()" type="file" id="files" name="file">
+                    </div>
+                    <div id="imagePreview"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Huỷ</button>
+                    <button type="submit" class="btn btn-primary">Lưu</button>
+                </div>
+        </form>
+    </div>
+</div>
+</div>
+<script>
+    function previewImages() {
+        var preview = document.getElementById('imagePreview');
+        var files = document.getElementById('files').files;
+
+        preview.innerHTML = '';
+
+        for (var i = 0; i < files.length; i++) {
+            (function (file) {
+                var reader = new FileReader();
+                reader.onloadend = function () {
+                    var img = document.createElement('img');
+                    img.style.marginRight = '10px';
+                    img.src = reader.result;
+                    img.style.width = '100px';
+                    img.style.height = '100px';
+                    preview.appendChild(img);
+                }
+                reader.readAsDataURL(file);
+            })(files[i]);
+        }
+    }
+</script>

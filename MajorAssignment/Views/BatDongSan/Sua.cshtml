@@ -1,0 +1,173 @@
+﻿@model BaiTapLonNet.Models.BatDongSan
+
+@{
+    ViewData["Title"] = "Sua";
+    int dem = 0;
+}
+
+<h1 style="margin-left:320px;">SỬA THÔNG TIN BẤT ĐỘNG SẢN</h1>
+
+<hr />
+<div class="row" style="display:flex;justify-content:center">
+    <div class="col-md-8">
+        <form asp-action="Sua" asp-controller="BatDongSan" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MaBatDongSan" />
+            <div class="form-group">
+                <label asp-for="TenToaNha" class="control-label">Tên bất động sản</label>
+                <input asp-for="TenToaNha" class="form-control" />
+                <span asp-validation-for="TenToaNha" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DienTichSan" class="control-label">Diện tích sàn</label>
+                <input asp-for="DienTichSan" class="form-control" />
+                <span asp-validation-for="DienTichSan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DienTichChoThue" class="control-label">Diện tích cho thuê</label>
+                <input asp-for="DienTichChoThue" class="form-control" />
+                <span asp-validation-for="DienTichChoThue" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhiQuanLy" class="control-label">Phí quản lý</label>
+                <input asp-for="PhiQuanLy" class="form-control" />
+                <span asp-validation-for="PhiQuanLy" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VAT" class="control-label">VAT</label>
+                <input asp-for="VAT" class="form-control" />
+                <span asp-validation-for="VAT" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhiGuiOto" class="control-label">Phí gửi ô tô</label>
+                <input asp-for="PhiGuiOto" class="form-control" />
+                <span asp-validation-for="PhiGuiOto" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhiGuiXeMay" class="control-label">Phí gửi xe máy</label>
+                <input asp-for="PhiGuiXeMay" class="form-control" />
+                <span asp-validation-for="PhiGuiXeMay" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SoDienThoai" class="control-label">Số điện thoại</label>
+                <input asp-for="SoDienThoai" class="form-control" />
+                <span asp-validation-for="SoDienThoai" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Gia" class="control-label">Giá</label>
+                <input asp-for="Gia" class="form-control" />
+                <span asp-validation-for="Gia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input hidden asp-for="GiaCapNhat" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input hidden asp-for="DiaChi" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="SoTang" class="control-label">Số tầng</label>
+                <input asp-for="SoTang" class="form-control" />
+                <span asp-validation-for="SoTang" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label for="files" class="form-label">Chọn hình ảnh <span style="color:red">*</span></label>
+                <input class="form-control" onchange="previewImages()" type="file" id="files" name="files" multiple>
+            </div>
+            <div id="imagePreview">
+
+                @foreach (var item in Model.HinhAnh)
+                {
+                    <img src="@item" style="height:100px;width:100px;"/>
+                }
+            </div>
+            <div class="form-group">
+                <input hidden asp-for="HinhAnh" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input hidden asp-for="Loai" class="form-control" />
+            </div>
+            <div class="form-group">
+                <select hidden asp-for="MaTaiKhoan" class="form-control"></select>
+            </div>
+            <div id="inputs-container">
+                <h3 class="my-3">Tổng quan về bất động sản</h3>
+              
+                @for (int i = 0; i < ViewBag.ChiTiet.TongQuan.Count; i++)
+                {
+                    string[] chuoiTach = ViewBag.ChiTiet.TongQuan[i].Split(':');
+                    string chuoi1 = chuoiTach[0].Trim();
+                    string chuoi2 = chuoiTach[1].Trim();
+                    ++dem;
+                    <div class="input-group gap-3 mb-3">
+                        <input class="form-control" value="@chuoi1" placeholder="Nhập tiêu đề" type="text" id="input-@dem" name="input-@dem">
+                        @{++dem;}
+                        <input class="form-control" value="@chuoi2" placeholder="Nhập nội dung" type="text" id="input-@dem" name="input-@dem">
+                    </div>
+                }
+                
+            </div>
+            <button class="btn btn-primary my-3" type="button" id="add-input-button">Thêm tổng quan</button>
+            <div class="form-group" style="display:flex;justify-content:space-between;">
+                <input type="submit" value="Lưu" class="btn btn-primary" />
+                <a class="btn btn-primary" asp-action="HoSo" asp-controller="TaiKhoan">Huỷ</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function previewImages() {
+        var preview = document.getElementById('imagePreview');
+        var files = document.getElementById('files').files;
+        preview.innerHTML = '';
+
+        for (var i = 0; i < files.length; i++) {
+            (function (file) {
+                var reader = new FileReader();
+                reader.onloadend = function () {
+                    var img = document.createElement('img');
+                    img.style.marginRight = '10px';
+                    img.src = reader.result;
+                    img.style.width = '100px';
+                    img.style.height = '100px';
+                    preview.appendChild(img);
+                }
+                reader.readAsDataURL(file);
+            })(files[i]);
+        }
+    }
+    var addButton = document.getElementById("add-input-button");
+    var inputs = document.getElementsByTagName("input");
+
+    var inputCount = $("input[name^='input-']").length + 1;
+ 
+    addButton.addEventListener("click", function () {
+        var newInputsContainer = document.createElement('div');
+        newInputsContainer.className = 'input-group gap-3 mb-3';
+
+        var input1 = document.createElement('input');
+        input1.type = "text";
+        input1.name = "input-" + inputCount;
+        ++inputCount;
+        input1.classList.add("form-control");
+        input1.setAttribute("data-index", inputCount);
+        input1.placeholder = "Nhập tiêu đề";
+        var input2 = document.createElement('input');
+        input2.type = "text";
+        input2.name = "input-" + inputCount;
+        input2.classList.add("form-control");
+        input2.setAttribute("data-index", inputCount);
+        input2.placeholder = "Nhập nội dung";
+        newInputsContainer.appendChild(input1);
+        newInputsContainer.appendChild(input2);
+        var inputsContainer = document.getElementById('inputs-container');
+        inputsContainer.appendChild(newInputsContainer);
+        inputCount++;
+    }
+    )
+</script>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
