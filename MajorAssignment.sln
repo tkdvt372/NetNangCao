@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BaiTapLonNet", "BaiTapLonNet\BaiTapLonNet.csproj", "{72AED762-D2AB-412E-A8AA-193D55ECAF39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MajorAssignment", "MajorAssignment\MajorAssignment.csproj", "{E7747CF2-3842-4A44-8CE2-1F1A52E1CBAD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{72AED762-D2AB-412E-A8AA-193D55ECAF39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{72AED762-D2AB-412E-A8AA-193D55ECAF39}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{72AED762-D2AB-412E-A8AA-193D55ECAF39}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{72AED762-D2AB-412E-A8AA-193D55ECAF39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7747CF2-3842-4A44-8CE2-1F1A52E1CBAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7747CF2-3842-4A44-8CE2-1F1A52E1CBAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7747CF2-3842-4A44-8CE2-1F1A52E1CBAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7747CF2-3842-4A44-8CE2-1F1A52E1CBAD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
