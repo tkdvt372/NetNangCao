@@ -22,7 +22,7 @@ namespace BaiTapLonNet.Areas.admin.Controllers
             var taikhoan = _taiKhoanManager.GetFirstOrDefault(x => x.Email == email);  
             if (taikhoan == null)
             {
-                return RedirectToAction("DangNhap", "TaiKhoan");
+                return RedirectToAction("DangNhap", "TaiKhoan",new { area = "" });
             }
             ViewBag.taikhoan = taikhoan;
             return View(taikhoan);
